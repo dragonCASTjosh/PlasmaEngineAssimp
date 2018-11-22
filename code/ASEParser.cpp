@@ -452,7 +452,11 @@ void Parser::ParseLV1SoftSkinBlock()
                             ParseLV4MeshFloat( me.second );
 
                             // Add the new bone weight to list
-                            vert.mBoneWeights.push_back(me);
+                            //+WELDER
+                            // Fixed conversion from double to float warning.
+                            std::pair<int, float> weight(me.first, static_cast<float>(me.second));
+                            vert.mBoneWeights.push_back(weight);
+                            //-WELDER
                         }
                     }
                 }
