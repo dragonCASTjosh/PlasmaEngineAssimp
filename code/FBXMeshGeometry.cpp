@@ -492,19 +492,18 @@ void ResolveVertexDataArray(std::vector<T>& data_out, const Scope& source,
             return;
         }
 
+        const T empty;
         unsigned int next = 0;
         for(int i : uvIndices) {
-			if (static_cast<size_t>(i) >= tempData.size()) {
-                //+WELDER
-                // Don't halt the scene process for out of range uv's.
-                /*
+            if ( -1 == i ) {
+                data_out[ next++ ] = empty;
+                continue;
+            }
+            if (static_cast<size_t>(i) >= tempData.size()) {
                 DOMError("index out of range",&GetRequiredElement(source,indexDataElementName));
-                */
-                data_out[next++] = T(0);
-                //-WELDER
             }
 
-			data_out[next++] = tempData[i];
+            data_out[next++] = tempData[i];
         }
     }
     else {
